@@ -15,4 +15,13 @@ public class Wisp : MonoBehaviour
     {
         
     }
+
+    void avoidBehavior() // call on nearby cat (collision with larger child trigger volume
+    {
+
+    }
+    void caught() // call on cat collision to main object.
+    {
+
+    }
 }
