@@ -33,6 +33,7 @@ using UnityEngine;
             for (int i = 0; i < initialPoolSize; i++)
             {
                 GameObject wisp = Instantiate(wispPrefab);
+                wisp.transform.parent = this.transform;
                 wisp.SetActive(false);
                 wispPool.Enqueue(wisp);
             }
