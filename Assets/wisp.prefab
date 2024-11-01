@@ -255,6 +255,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f577d79dc6e59b24585da7adabde7816, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wispPool: {fileID: 0}
   DEBUG_FLAG: 1
   softCapVelocity: 10
   hardCapVelocity: 20

@@ -6,6 +6,7 @@ public class Wisp : MonoBehaviour
 {
     [SerializeField]
     private GameObject wispPool;
+
     private WispSpawner wispPoolScript;
 
     [SerializeField]

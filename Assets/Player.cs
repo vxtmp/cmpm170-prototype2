@@ -99,7 +99,9 @@ public class Player : MonoBehaviour
     {
         // flatten one of the axis to prevent flying or moving into the ground
         direction.y = 0;
-        transform.position += direction * Time.deltaTime * MOVESPEED_MULTIPLIER;
+        //transform.position += direction * Time.deltaTime * MOVESPEED_MULTIPLIER;
+        // set velocity in direction
+        rb.velocity = direction * MOVESPEED_MULTIPLIER;
     }
 
     void FixedUpdate()
