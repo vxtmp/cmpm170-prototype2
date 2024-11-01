@@ -7247,10 +7247,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: wisp
       objectReference: {fileID: 0}
-    - target: {fileID: 7376715856485983957, guid: f6c15aef175fff946b27ecc3565d9ccc, type: 3}
-      propertyPath: m_TagString
-      value: Wisp
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

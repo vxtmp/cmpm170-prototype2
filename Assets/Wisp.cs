@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Wisp : MonoBehaviour
 {
+    [SerializeField]
+    private bool DEBUG_FLAG = true;
     //private bool isVisible = false;
     private float speed = 1.0f;
 
@@ -41,14 +43,17 @@ public class Wisp : MonoBehaviour
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
 
-    void avoidBehavior() // call on nearby cat (collision with larger child trigger volume
+    public void avoidBehavior() // call on nearby cat (collision with larger child trigger volume
     {
-        // apply a high force vector in direction away from cat
+        // apply a high force vector in direction away from cat, with a slight random angle direction
+        //rb.AddForce((transform.position - cat.transform.position).normalized * speed * 10.0f);
+        rb.AddForce((transform.position - GameObject.Find("Player").transform.position).normalized * speed * 10.0f);
 
     }
     void caught() // call on cat collision to main object.
     {
-
+        if (DEBUG_FLAG) Debug.Log("caught!");
+        
     }
 
     void randomMovementForce()
@@ -75,6 +80,14 @@ public class Wisp : MonoBehaviour
             //rb.velocity = rb.velocity.normalized * softCapVelocity;
             // slowly reduce velocity with a curve
             rb.velocity = rb.velocity.normalized * Mathf.Lerp(rb.velocity.magnitude, softCapVelocity, Time.deltaTime);
+        }
+    }
+    // on collision with player, call caught()  
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.name == "Player")
+        {
+            caught();
         }
     }
 }

@@ -20,42 +20,63 @@ public class LightRay : MonoBehaviour
         
     }
 
+    bool isWisp(Collider other)
+    {
+        if (other.gameObject.CompareTag("Wisp") || other.gameObject.name == "wisp")
+        {
+            return true;
+        }
+        return false;
+    }
+    bool isPlayer(Collider other)
+    {
+        if (other.gameObject.CompareTag("Player") || other.gameObject.name == "Player")
+        {
+            return true;
+        }
+        return false;
+    }
+
     // check collision trigger, if the object has the tag Wisp, then call make visible function.
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Wisp") || other.gameObject.name == "wisp")
+        if (isWisp(other))
         {
             Wisp wisp = other.gameObject.GetComponent<Wisp>();
             if (wisp != null)
             {
-                if (DEBUG_FLAG)
-                    Debug.Log("wisp entered light. making visible");
+                if (DEBUG_FLAG) Debug.Log("wisp entered light. making visible");
                 wisp.makeVisible();
             } else
             {
-                if (DEBUG_FLAG)
-                    Debug.Log("wisp == null");
+                if (DEBUG_FLAG) Debug.Log("wisp == null");
             }
-            //other.gameObject.gameObject.GetComponent<Wisp>().makeInvisible();
+            return;
+        }
+        if (isPlayer(other))
+        {
+            // enable light post processing effect here.
         }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.CompareTag("Wisp") || other.gameObject.name == "wisp")
+        if (isWisp(other))
         {
             Wisp wisp = other.gameObject.GetComponent<Wisp>();
             if (wisp != null)
             {
-                if (DEBUG_FLAG)
-                    Debug.Log("wisp exited light. making invisible");
+                if (DEBUG_FLAG) Debug.Log("wisp exited light. making invisible");
                 wisp.makeInvisible();
             }
             else
             {
-                if (DEBUG_FLAG)
-                    Debug.Log("wisp == null");
+                if (DEBUG_FLAG) Debug.Log("wisp == null");
             }
-            //other.gameObject.gameObject.GetComponent<Wisp>().makeVisible();
+            return;
+        }
+        if (isPlayer(other))
+        {
+            // disable light post processing effecth ere
         }
     }
 }
