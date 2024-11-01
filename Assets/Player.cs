@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+
+    private bool isCharging = false;
     private float currentCharge = 0.0f;
     private float chargeSpeed = 1.0f;
+    [SerializeField]
+    private const float MOVESPEED_MULTIPLIER = 3.0f;
     public const float MAX_CHARGE = 2.0f;
     public const float POUNCE_BASE_DISTANCE = 5.0f;
 
-    public float mouseSensitivity = 100f;
+    [SerializeField]
+    private const float mouseSensitivity = 500f;
     public Transform playerBody; // Link this to the Player object if camera is attached to the player
 
     private float xRotation = 0f;
@@ -58,22 +63,25 @@ public class Player : MonoBehaviour
     // this is to ensure that the player moves at a consistent speed regardless of framerate
     void moveLeft() {
         // move left relative to the current facing of the camera
-        transform.position -= transform.right * Time.deltaTime;
+        catMove(transform.right * -1);
     }
     void moveBackward()
     {
-        // move back relative
-        transform.position -= transform.forward * Time.deltaTime;
+        catMove(transform.forward * -1);
     }
     void moveRight()
     {
-        // move right relative
-        transform.position += transform.right * Time.deltaTime;
+        catMove(transform.right);
     }
     void moveForward()
     {
         // move forward relative
-        transform.position += transform.forward * Time.deltaTime;
+        catMove(transform.forward);
+    }
+
+    void catMove(Vector3 direction)
+    {
+        transform.position += direction * Time.deltaTime * MOVESPEED_MULTIPLIER;
     }
 
     void FixedUpdate()
@@ -94,16 +102,30 @@ public class Player : MonoBehaviour
         {
             moveRight();
         }
-        // while mouse held down, charge up
-        if (Input.GetMouseButton(0))
+        // while spacebar held down
+        if (Input.GetKey(KeyCode.Space) && isCharging == false)
         {
+            isCharging = true;
             startCharging();
-        }
-        // when mouse released, pounce forward
-        if (Input.GetMouseButtonUp(0))
+            Debug.Log("space held down. charging");
+        } else if (!Input.GetKey(KeyCode.Space) && isCharging == true)
         {
             pounceForward();
+            isCharging = false;
+            Debug.Log("space released. pouncing forward");
         }
+
+
+
+        //if (Input.GetMouseButton(0))
+        //{
+        //    startCharging();
+        //}
+        //// when mouse released, pounce forward
+        //if (Input.GetMouseButtonUp(0))
+        //{
+        //    pounceForward();
+        //}
         rotatePlayer();
     }
 
