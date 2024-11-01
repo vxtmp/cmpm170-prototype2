@@ -15,10 +15,12 @@ public class Player : MonoBehaviour
     private float xRotation = 0f;
     private float yRotation = 0f;
 
+    private Rigidbody rb;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        this.rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -43,7 +45,9 @@ public class Player : MonoBehaviour
         // move forward by POUNCE_BASE_DISTANCE * currentCharge
         if (currentCharge > 0)
         {
-            transform.position += transform.forward * POUNCE_BASE_DISTANCE * currentCharge;
+            //transform.position += transform.forward * POUNCE_BASE_DISTANCE * currentCharge;
+            // apply forces to rb
+            rb.AddForce(transform.forward * POUNCE_BASE_DISTANCE * currentCharge, ForceMode.Impulse);
             currentCharge = 0;
         }
 
