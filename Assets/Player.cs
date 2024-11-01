@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     public Transform playerBody; // Link this to the Player object if camera is attached to the player
 
     private float xRotation = 0f;
+    private float yRotation = 0f;
 
     // Start is called before the first frame update
     void Start()
@@ -51,19 +52,24 @@ public class Player : MonoBehaviour
     // abstract each WASD movement direction into a function
     // call these functions in FixedUpdate
     // this is to ensure that the player moves at a consistent speed regardless of framerate
-    void moveLeft() { 
+    void moveLeft() {
+        // move left relative to the current facing of the camera
+        transform.position -= transform.right * Time.deltaTime;
     }
     void moveBackward()
     {
-
+        // move back relative
+        transform.position -= transform.forward * Time.deltaTime;
     }
     void moveRight()
     {
-
+        // move right relative
+        transform.position += transform.right * Time.deltaTime;
     }
     void moveForward()
     {
-
+        // move forward relative
+        transform.position += transform.forward * Time.deltaTime;
     }
 
     void FixedUpdate()
@@ -94,6 +100,7 @@ public class Player : MonoBehaviour
         {
             pounceForward();
         }
+        rotatePlayer();
     }
 
     // need to move the camera with mouse
@@ -102,16 +109,21 @@ public class Player : MonoBehaviour
     
     void rotatePlayer()
     {
-        // Get mouse movement
-        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        //Get mouse movement
+        //float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
-        // Adjust vertical rotation and clamp it to prevent over-rotation
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        ////// Adjust vertical rotation and clamp it to prevent over-rotation
+        //xRotation -= mouseY;
+        //xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        // Apply rotations: rotate camera around X and player around Y
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        playerBody.Rotate(Vector3.up * mouseX);
+        ////// Apply rotations: 
+        //transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        //playerBody.Rotate(Vector3.up * mouseX);
+
+        //// rotate the player around x and y
+        //transform.Rotate(Vector3.up * mouseX);
+        //transform.Rotate(Vector3.right * mouseY);
+
     }
 }
