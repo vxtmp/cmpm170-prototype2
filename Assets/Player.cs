@@ -5,6 +5,9 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
+    [SerializeField]
+    private const bool DEBUG_FLAG = false;
+
     private bool isCharging = false;
     private float currentCharge = 0.0f;
     private float chargeSpeed = 1.0f;
@@ -122,12 +125,14 @@ public class Player : MonoBehaviour
         {
             isCharging = true;
             startCharging();
-            Debug.Log("space held down. charging");
+            if (DEBUG_FLAG)
+                Debug.Log("space held down. charging");
         } else if (!Input.GetKey(KeyCode.Space) && isCharging == true)
         {
             pounceForward();
             isCharging = false;
-            Debug.Log("space released. pouncing forward");
+            if (DEBUG_FLAG)
+                Debug.Log("space released. pouncing forward");
         }
         rotatePlayer();
     }
