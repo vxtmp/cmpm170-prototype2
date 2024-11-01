@@ -5,6 +5,9 @@ using UnityEngine;
 public class LightRay : MonoBehaviour
 {
 
+    [SerializeField]
+    private bool DEBUG_FLAG = true;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,10 +28,13 @@ public class LightRay : MonoBehaviour
             Wisp wisp = other.gameObject.GetComponent<Wisp>();
             if (wisp != null)
             {
+                if (DEBUG_FLAG)
+                    Debug.Log("wisp entered light. making visible");
                 wisp.makeVisible();
             } else
             {
-                Debug.Log("wisp == null");
+                if (DEBUG_FLAG)
+                    Debug.Log("wisp == null");
             }
             //other.gameObject.gameObject.GetComponent<Wisp>().makeInvisible();
         }
@@ -40,11 +46,14 @@ public class LightRay : MonoBehaviour
             Wisp wisp = other.gameObject.GetComponent<Wisp>();
             if (wisp != null)
             {
+                if (DEBUG_FLAG)
+                    Debug.Log("wisp exited light. making invisible");
                 wisp.makeInvisible();
             }
             else
             {
-                Debug.Log("wisp == null");
+                if (DEBUG_FLAG)
+                    Debug.Log("wisp == null");
             }
             //other.gameObject.gameObject.GetComponent<Wisp>().makeVisible();
         }

@@ -6,11 +6,11 @@ public class Wisp : MonoBehaviour
 {
     //private bool isVisible = false;
     private float speed = 1.0f;
-    private float maxDistance = 10.0f;
-    private float distanceTravelled = 0.0f;
 
     private Rigidbody rb;
+    [SerializeField]
     private float softCapVelocity = 10.0f;
+    [SerializeField]
     private float hardCapVelocity = 20.0f;
     
 
@@ -18,13 +18,15 @@ public class Wisp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        this.rb = GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        randomMovementForce();
+        applySoftAndHardVelocityCaps();
+
     }
 
     public void makeVisible()
@@ -41,6 +43,7 @@ public class Wisp : MonoBehaviour
 
     void avoidBehavior() // call on nearby cat (collision with larger child trigger volume
     {
+        // apply a high force vector in direction away from cat
 
     }
     void caught() // call on cat collision to main object.
@@ -48,13 +51,18 @@ public class Wisp : MonoBehaviour
 
     }
 
-    void defaultMovement()
+    void randomMovementForce()
     {
-        // apply a random small random direction force
+        // if velocity magnitude is greater than soft cap * 1.1 then return
+        if (rb.velocity.magnitude > softCapVelocity * 1.1f)
+        {
+            return;
+        }
+        // else apply a random small random direction force
         rb.AddForce(new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f)) * speed);
     }
 
-    void attenuateVelocity()
+    void applySoftAndHardVelocityCaps()
     {
         // if rigidbody velocity is over the hardcap. set it to hard cap
         if (rb.velocity.magnitude > hardCapVelocity)
