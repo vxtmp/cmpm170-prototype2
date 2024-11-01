@@ -11,6 +11,9 @@ public class WispSpawner : MonoBehaviour
         [SerializeField] private GameObject wispPrefab;
         [SerializeField] private int initialPoolSize = 20;
 
+        // define a region that should contain the wisp objects
+        //[SerializeField] private GameObject wispRegion;
+
         private Queue<GameObject> wispPool = new Queue<GameObject>();
 
         private void Awake()
