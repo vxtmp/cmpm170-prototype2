@@ -9,6 +9,12 @@ public class Wisp : MonoBehaviour
     private float maxDistance = 10.0f;
     private float distanceTravelled = 0.0f;
 
+    private Rigidbody rb;
+    private float softCapVelocity = 10.0f;
+    private float hardCapVelocity = 20.0f;
+    
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,5 +46,27 @@ public class Wisp : MonoBehaviour
     void caught() // call on cat collision to main object.
     {
 
+    }
+
+    void defaultMovement()
+    {
+        // apply a random small random direction force
+        rb.AddForce(new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f)) * speed);
+    }
+
+    void attenuateVelocity()
+    {
+        // if rigidbody velocity is over the hardcap. set it to hard cap
+        if (rb.velocity.magnitude > hardCapVelocity)
+        {
+            rb.velocity = rb.velocity.normalized * hardCapVelocity;
+        }
+        // if rigidbody velocity is over the soft cap, reduce it by a factor
+        if (rb.velocity.magnitude > softCapVelocity)
+        {
+            //rb.velocity = rb.velocity.normalized * softCapVelocity;
+            // slowly reduce velocity with a curve
+            rb.velocity = rb.velocity.normalized * Mathf.Lerp(rb.velocity.magnitude, softCapVelocity, Time.deltaTime);
+        }
     }
 }
