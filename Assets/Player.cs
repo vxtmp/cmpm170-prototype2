@@ -9,12 +9,13 @@ public class Player : MonoBehaviour
     private float currentCharge = 0.0f;
     private float chargeSpeed = 1.0f;
     [SerializeField]
-    private const float MOVESPEED_MULTIPLIER = 3.0f;
-    public const float MAX_CHARGE = 2.0f;
-    public const float POUNCE_BASE_DISTANCE = 5.0f;
-
-    [SerializeField]
     private const float mouseSensitivity = 500f;
+    [SerializeField]
+    private const float MOVESPEED_MULTIPLIER = 3.0f;
+    [SerializeField]
+    private const float POUNCE_BASE_DISTANCE = 500.0f;
+    [SerializeField]
+    private const float MAX_CHARGE = 2.0f;
     public Transform playerBody; // Link this to the Player object if camera is attached to the player
 
     private float xRotation = 0f;
@@ -52,7 +53,7 @@ public class Player : MonoBehaviour
         {
             //transform.position += transform.forward * POUNCE_BASE_DISTANCE * currentCharge;
             // apply forces to rb
-            rb.AddForce(transform.forward * POUNCE_BASE_DISTANCE * currentCharge, ForceMode.Impulse);
+            rb.AddForce(transform.forward * POUNCE_BASE_DISTANCE * currentCharge * MOVESPEED_MULTIPLIER, ForceMode.Impulse);
             currentCharge = 0;
         }
 
@@ -81,6 +82,8 @@ public class Player : MonoBehaviour
 
     void catMove(Vector3 direction)
     {
+        // flatten one of the axis to prevent flying or moving into the ground
+        direction.y = 0;
         transform.position += direction * Time.deltaTime * MOVESPEED_MULTIPLIER;
     }
 
