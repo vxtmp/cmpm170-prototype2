@@ -2,14 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WispSpawner : MonoBehaviour
-{
-    public class WispPool : MonoBehaviour
+    public class WispSpawner : MonoBehaviour
     {
-        public static WispPool Instance { get; private set; }
+        public static WispSpawner Instance { get; private set; }
 
-        [SerializeField] private GameObject wispPrefab;
-        [SerializeField] private int initialPoolSize = 20;
+        [SerializeField] 
+        private GameObject wispPrefab;
+        [SerializeField] 
+        private int initialPoolSize = 20;
 
         // define a region that should contain the wisp objects
         //[SerializeField] private GameObject wispRegion;
@@ -60,4 +60,3 @@ public class WispSpawner : MonoBehaviour
             wispPool.Enqueue(wisp);
         }
     }
-}

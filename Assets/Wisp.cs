@@ -50,10 +50,11 @@ public class Wisp : MonoBehaviour
         rb.AddForce((transform.position - GameObject.Find("Player").transform.position).normalized * speed * 10.0f);
 
     }
-    void caught() // call on cat collision to main object.
+    public void caught() // call on cat collision to main object.
     {
         if (DEBUG_FLAG) Debug.Log("caught!");
-        
+        this.gameObject.SetActive(false);
+
     }
 
     void randomMovementForce()
