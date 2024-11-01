@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1278943766800246922}
   - component: {fileID: 2216228393216149978}
   - component: {fileID: 8183800865432755981}
+  - component: {fileID: -1086158405272990465}
   m_Layer: 0
   m_Name: wisp
   m_TagString: Untagged
@@ -105,3 +106,15 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-1086158405272990465
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7376715856485983957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4302cb0650a4bca46b6fb4b0c541daca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
