@@ -117,13 +117,10 @@ public class Player : MonoBehaviour
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
-        ////// Apply rotations: 
-        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
-        //playerBody.Rotate(Vector3.up * mouseX);
+        yRotation += mouseX;
 
-        //// rotate the player around x and y
-        //transform.Rotate(Vector3.up * mouseX);
-        //transform.Rotate(Vector3.right * mouseY);
 
+        // Apply rotations:
+        transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0f);
     }
 }
