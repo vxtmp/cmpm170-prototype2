@@ -110,15 +110,15 @@ public class Player : MonoBehaviour
     void rotatePlayer()
     {
         //Get mouse movement
-        //float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
-        //float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
+        float mouseX = Input.GetAxis("Mouse X") * mouseSensitivity * Time.deltaTime;
+        float mouseY = Input.GetAxis("Mouse Y") * mouseSensitivity * Time.deltaTime;
 
         ////// Adjust vertical rotation and clamp it to prevent over-rotation
-        //xRotation -= mouseY;
-        //xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         ////// Apply rotations: 
-        //transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         //playerBody.Rotate(Vector3.up * mouseX);
 
         //// rotate the player around x and y
