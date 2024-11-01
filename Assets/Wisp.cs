@@ -5,6 +5,10 @@ using UnityEngine;
 public class Wisp : MonoBehaviour
 {
     [SerializeField]
+    private GameObject wispPool;
+    private WispSpawner wispPoolScript;
+
+    [SerializeField]
     private bool DEBUG_FLAG = true;
     //private bool isVisible = false;
     private float speed = 1.0f;
@@ -21,6 +25,7 @@ public class Wisp : MonoBehaviour
     void Start()
     {
         this.rb = GetComponent<Rigidbody>();
+        wispPoolScript = wispPool.GetComponent<WispSpawner>();
     }
 
     // Update is called once per frame
@@ -53,8 +58,7 @@ public class Wisp : MonoBehaviour
     public void caught() // call on cat collision to main object.
     {
         if (DEBUG_FLAG) Debug.Log("caught!");
-        this.gameObject.SetActive(false);
-
+        wispPoolScript.ReturnWisp(this.gameObject);
     }
 
     void randomMovementForce()

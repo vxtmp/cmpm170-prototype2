@@ -7,7 +7,6 @@ public class LightRay : MonoBehaviour
 
     [SerializeField]
     private bool DEBUG_FLAG = true;
-
     // Start is called before the first frame update
     void Start()
     {
