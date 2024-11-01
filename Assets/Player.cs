@@ -129,25 +129,12 @@ public class Player : MonoBehaviour
             isCharging = false;
             Debug.Log("space released. pouncing forward");
         }
-
-
-
-        //if (Input.GetMouseButton(0))
-        //{
-        //    startCharging();
-        //}
-        //// when mouse released, pounce forward
-        //if (Input.GetMouseButtonUp(0))
-        //{
-        //    pounceForward();
-        //}
         rotatePlayer();
     }
 
     // need to move the camera with mouse
     // use Input.GetAxis("Mouse X") and Input.GetAxis("Mouse Y") to get mouse movement
     // rotate the player object based on mouse movement.
-    
     void rotatePlayer()
     {
         //Get mouse movement
