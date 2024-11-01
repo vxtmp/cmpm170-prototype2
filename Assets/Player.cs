@@ -16,6 +16,10 @@ public class Player : MonoBehaviour
     private const float POUNCE_BASE_DISTANCE = 500.0f;
     [SerializeField]
     private const float MAX_CHARGE = 2.0f;
+
+    [SerializeField]
+    private GameObject pawsCanvasObject;
+
     public Transform playerBody; // Link this to the Player object if camera is attached to the player
 
     private float xRotation = 0f;
@@ -32,7 +36,15 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        // if velocity < a certain value then disable the pawsCanvasObject
+        if (rb.velocity.magnitude < 1.0f)
+        {
+            pawsCanvasObject.SetActive(false);
+        }
+        else
+        {
+            pawsCanvasObject.SetActive(true);
+        }
     }
 
     void startCharging()
