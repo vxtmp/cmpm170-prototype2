@@ -20,12 +20,12 @@ public class LightRay : MonoBehaviour
     // check collision trigger, if the object has the tag Wisp, then call make visible function.
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Wisp") || other.gameObject.name == "Wisp")
+        if (other.gameObject.CompareTag("Wisp") || other.gameObject.name == "wisp")
         {
             Wisp wisp = other.gameObject.GetComponent<Wisp>();
             if (wisp != null)
             {
-                wisp.makeInvisible();
+                wisp.makeVisible();
             } else
             {
                 Debug.Log("wisp == null");
@@ -33,9 +33,20 @@ public class LightRay : MonoBehaviour
             //other.gameObject.gameObject.GetComponent<Wisp>().makeInvisible();
         }
     }
-
-    void makeVisible()
+    private void OnTriggerExit(Collider other)
     {
-
+        if (other.gameObject.CompareTag("Wisp") || other.gameObject.name == "wisp")
+        {
+            Wisp wisp = other.gameObject.GetComponent<Wisp>();
+            if (wisp != null)
+            {
+                wisp.makeInvisible();
+            }
+            else
+            {
+                Debug.Log("wisp == null");
+            }
+            //other.gameObject.gameObject.GetComponent<Wisp>().makeVisible();
+        }
     }
 }
