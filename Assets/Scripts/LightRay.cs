@@ -1,16 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.PostProcessing;
 
 public class LightRay : MonoBehaviour
 {
 
     [SerializeField]
     private bool DEBUG_FLAG = true;
+    [SerializeField] private Bloom bloom;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        PostProcessVolume volume = GetComponent<PostProcessVolume>();
+        volume.profile.TryGetSettings(out bloom);
     }
 
     // Update is called once per frame
@@ -55,6 +60,7 @@ public class LightRay : MonoBehaviour
         if (isPlayer(other))
         {
             // enable light post processing effect here.
+            bloom.active = true;
         }
     }
     private void OnTriggerExit(Collider other)
@@ -76,6 +82,7 @@ public class LightRay : MonoBehaviour
         if (isPlayer(other))
         {
             // disable light post processing effecth ere
+            bloom.active = false;
         }
     }
 }
