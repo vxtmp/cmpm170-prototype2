@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 21559489}
   - component: {fileID: 21559488}
   m_Layer: 6
-  m_Name: empty test
+  m_Name: post process volume test (hue, saturation, contrast adjustment)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
