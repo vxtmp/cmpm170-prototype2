@@ -29,6 +29,9 @@ public class Player : MonoBehaviour
 
     private Rigidbody rb;
 
+    private float forwardSpeed = 0.0f;
+    private float rightSpeed = 0.0f;
+
     void displayPawsIfApplicable()
     {
         // if velocity < a certain value then disable the pawsCanvasObject
@@ -104,7 +107,7 @@ public class Player : MonoBehaviour
     bool isGrounded()
     {
         // check if the player is grounded
-        return Physics.Raycast(transform.position, Vector3.down, 1.0f);
+        return Physics.Raycast(transform.position, Vector3.down, 0.30f);
     }
 
     void catMove(Vector3 direction)
@@ -121,43 +124,36 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        forwardSpeed = 0.0f;
+        rightSpeed = 0.0f;
         if (Input.GetKey(KeyCode.W))
         {
-            walking = true;
-            moveForward();
-        }
-        else
-        {
-            walking = false;
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            walking = true;
-            moveBackward();
-        }
-        else
-        {
-            walking = false;
+            forwardSpeed++;
         }
         if (Input.GetKey(KeyCode.A))
         {
-            walking = true;
-            moveLeft();
+            rightSpeed--;
         }
-        else
+        if (Input.GetKey(KeyCode.S))
         {
-            walking = false;
+            forwardSpeed--;
         }
         if (Input.GetKey(KeyCode.D))
         {
-            walking = true;
-            moveRight();
+            rightSpeed++;
         }
-        else
+        if (forwardSpeed == 0.0f && rightSpeed == 0.0f)
         {
             walking = false;
         }
-        // while spacebar held down
+        else
+        {
+            Vector3 direction = (transform.forward * forwardSpeed + transform.right * rightSpeed);
+            direction.y = 0;
+            direction.Normalize();
+            catMove(direction);
+            walking = true;
+        }
         if (Input.GetKey(KeyCode.Space) && isCharging == false)
         {
             isCharging = true;
