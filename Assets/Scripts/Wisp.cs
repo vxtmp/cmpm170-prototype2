@@ -14,9 +14,13 @@ public class Wisp : MonoBehaviour
 
     private Rigidbody rb;
     [SerializeField]
-    private float softCapVelocity = 10.0f;
+    private GameObject playerObj;
     [SerializeField]
-    private float hardCapVelocity = 100.0f;
+    private float SOFTCAP_VELOCITY = 10.0f;
+    [SerializeField]
+    private float HARDCAP_VELOCITY = 100.0f;
+    [SerializeField]
+    private float AVOID_FORCE = 10.0f;
     private Vector3 dodgeDirection = new Vector3 (-1, 0, 0);
 
     private bool isAvoidingNearbyCat = false;
@@ -33,8 +37,14 @@ public class Wisp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        // randomMovementForce();
-        applySoftAndHardVelocityCaps();
+        if (isAvoidingNearbyCat)
+        {
+            avoidBehavior(playerObj.transform.position);
+        } else
+        {
+            randomMovementForce();
+        }
+        applySoftAndHardVelocityCaps(); // truncates to hard. lerps to soft.
 
     }
 
@@ -78,7 +88,7 @@ public class Wisp : MonoBehaviour
         }
 
         dodgePerpendicular.Normalize(); // Ensure consistent magnitude
-        Debug.Log("Consistent Dodge Perpendicular Vector: " + dodgePerpendicular);
+        if (DEBUG_FLAG) Debug.Log("Consistent Dodge Perpendicular Vector: " + dodgePerpendicular);
 
         return dodgePerpendicular;
     }
@@ -94,11 +104,10 @@ public class Wisp : MonoBehaviour
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
 
-    public void avoidBehavior() // call on nearby cat (collision with larger child trigger volume
+    public float calculateAvoidForce (float distance)
     {
-        
-        rb.AddForce((transform.position - GameObject.Find("Player").transform.position).normalized * speed * 10.0f);
-
+        if (DEBUG_FLAG) Debug.Log("distance is " + distance + " force is " + AVOID_FORCE / distance);
+        return AVOID_FORCE / distance;
     }
     public void avoidBehavior(Vector3 catPosition)
     {
@@ -106,10 +115,11 @@ public class Wisp : MonoBehaviour
         // between the cat and the wisp
         // get the vector from cat to wisp
         Vector3 catToWisp = transform.position - catPosition;
+        float avoidForce = calculateAvoidForce(catToWisp.magnitude);
         // calculate the relative dodge vector
         Vector3 relativeDodgeVector = calculateRelativeDodgeVector(catToWisp);
         // apply dodge vector
-        rb.AddForce(relativeDodgeVector * speed * 100.0f);
+        rb.AddForce(relativeDodgeVector * speed * avoidForce);
     }
     public void caught() // call on cat collision to main object.
     {
@@ -121,7 +131,7 @@ public class Wisp : MonoBehaviour
     void randomMovementForce()
     {
         // if velocity magnitude is greater than soft cap * 1.1 then return
-        if (rb.velocity.magnitude > softCapVelocity * 1.1f)
+        if (rb.velocity.magnitude > SOFTCAP_VELOCITY * 1.1f)
         {
             return;
         }
@@ -132,16 +142,16 @@ public class Wisp : MonoBehaviour
     void applySoftAndHardVelocityCaps()
     {
         // if rigidbody velocity is over the hardcap. set it to hard cap
-        if (rb.velocity.magnitude > hardCapVelocity)
+        if (rb.velocity.magnitude > HARDCAP_VELOCITY)
         {
-            rb.velocity = rb.velocity.normalized * hardCapVelocity;
+            rb.velocity = rb.velocity.normalized * HARDCAP_VELOCITY;
         }
         // if rigidbody velocity is over the soft cap, reduce it by a factor
-        if (rb.velocity.magnitude > softCapVelocity)
+        if (rb.velocity.magnitude > SOFTCAP_VELOCITY)
         {
             //rb.velocity = rb.velocity.normalized * softCapVelocity;
             // slowly reduce velocity with a curve
-            rb.velocity = rb.velocity.normalized * Mathf.Lerp(rb.velocity.magnitude, softCapVelocity, Time.deltaTime);
+            rb.velocity = rb.velocity.normalized * Mathf.Lerp(rb.velocity.magnitude, SOFTCAP_VELOCITY, Time.deltaTime);
         }
     }
     // on collision with player, call caught()  

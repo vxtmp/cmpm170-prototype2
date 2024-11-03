@@ -101,13 +101,22 @@ public class Player : MonoBehaviour
         catMove(transform.forward);
     }
 
+    bool isGrounded()
+    {
+        // check if the player is grounded
+        return Physics.Raycast(transform.position, Vector3.down, 1.0f);
+    }
+
     void catMove(Vector3 direction)
     {
         // flatten one of the axis to prevent flying or moving into the ground
         direction.y = 0;
         //transform.position += direction * Time.deltaTime * MOVESPEED_MULTIPLIER;
         // set velocity in direction
-        rb.velocity = direction * MOVESPEED_MULTIPLIER;
+        if (isGrounded())
+        {
+            rb.velocity = direction * MOVESPEED_MULTIPLIER;
+        }
     }
 
     void FixedUpdate()
