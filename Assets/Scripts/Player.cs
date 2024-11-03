@@ -31,14 +31,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody rb;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        this.rb = GetComponent<Rigidbody>();
-    }
-
-    // Update is called once per frame
-    void Update()
+    void displayPawsIfApplicable()
     {
         // if velocity < a certain value then disable the pawsCanvasObject
         float pawThreshold = transform.forward.magnitude * MOVESPEED_MULTIPLIER;
@@ -51,6 +44,18 @@ public class Player : MonoBehaviour
             pawsCanvasObject.SetActive(true);
         }
     }
+    // Start is called before the first frame update
+    void Start()
+    {
+        this.rb = GetComponent<Rigidbody>();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        displayPawsIfApplicable();
+    }
+
 
     void startCharging()
     {
