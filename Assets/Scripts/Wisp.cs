@@ -11,9 +11,11 @@ public class Wisp : MonoBehaviour
     [SerializeField]
     private bool DEBUG_FLAG = true;
     //private bool isVisible = false;
+    [SerializeField] private Mesh bunny;
     private float speed = 0.3f;
 
     private Rigidbody rb;
+    private MeshFilter meshFilter;
 
     private const float SOFTCAP_VELOCITY = 2.0f;
     private const float HARDCAP_VELOCITY = 20.0f;
@@ -40,6 +42,7 @@ public class Wisp : MonoBehaviour
         wispPoolScript = wispSpawner.GetComponent<WispSpawner>()!;
 
         this.rb = GetComponent<Rigidbody>();
+        this.meshFilter = GetComponent<MeshFilter>();
         vector_duration = Random.Range(0.5f, MAX_VECTOR_DURATION);
         currentVector = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
         currentVector.Normalize();
@@ -107,17 +110,23 @@ public class Wisp : MonoBehaviour
     {
         if (DEBUG_FLAG) Debug.Log("caught!");
         setColorToRed();
-        returnWispAfterDelay(1.0f);
+        returnWispAfterDelay(3.0f);
     }
 
     public void setColorToRed()
     {
+        this.meshFilter.mesh = bunny;
         this.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+        this.rb.useGravity = true;
+        Debug.Log(this.meshFilter.mesh);
     }
 
     public void resetColor()
     {
+        this.meshFilter.mesh = Resources.GetBuiltinResource<Mesh>("Sphere.fbx");
         this.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
+        this.rb.useGravity = false;
+        Debug.Log(this.meshFilter.mesh);
     }
 
     // create a coroutine to return the wisp after a delay
