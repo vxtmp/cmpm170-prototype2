@@ -12,7 +12,7 @@ public class WispSpawner : MonoBehaviour
     private int currentActive = 0;
 
     private float timeSinceLastSpawn = 0.0f;
-    private float spawnRate = 0.5f;
+    private float spawnRate = 0.3f;
 
 
     // define a region that should contain the wisp objects

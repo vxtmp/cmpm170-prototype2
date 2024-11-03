@@ -109,7 +109,7 @@ public class Wisp : MonoBehaviour
         if (DEBUG_FLAG) Debug.Log("caught!");
         setColorToRed();
         Debug.Log("red");
-        returnWispAfterDelay(2.0f);
+        returnWispAfterDelay(0.5f);
     }
 
     public void setColorToRed()
