@@ -93,11 +93,15 @@ public class Wisp : MonoBehaviour
         //isVisible = true;
         // enable this object's mesh renderer component
         this.gameObject.GetComponent<MeshRenderer>().enabled = true;
+        // set layer to default
+        this.gameObject.layer = 0;
     }
 
     public void makeInvisible()
     {
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
+        // set layer to InvisWisp
+        this.gameObject.layer = 8;
     }
     public void caught() // call on cat collision to main object.
     {
