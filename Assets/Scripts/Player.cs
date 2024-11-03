@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
     private const float POUNCE_BASE_DISTANCE = 500.0f;
     [SerializeField]
     private const float MAX_CHARGE = 2.0f;
+    [SerializeField]
+    private float MIDAIR_DIRECTION_INFLUENCE = 0.05f;
 
     [SerializeField]
     private GameObject pawsCanvasObject;
@@ -29,8 +31,6 @@ public class Player : MonoBehaviour
 
     private Rigidbody rb;
 
-    private float forwardSpeed = 0.0f;
-    private float rightSpeed = 0.0f;
 
     void displayPawsIfApplicable()
     {
@@ -72,7 +72,7 @@ public class Player : MonoBehaviour
     void pounceForward()
     {
         // move forward by POUNCE_BASE_DISTANCE * currentCharge
-        if (currentCharge > 0 && isGrounded())
+        if (currentCharge > 0)
         {
             //transform.position += transform.forward * POUNCE_BASE_DISTANCE * currentCharge;
             // apply forces to rb
@@ -81,29 +81,6 @@ public class Player : MonoBehaviour
         }
 
     }
-
-    // abstract each WASD movement direction into a function
-    // call these functions in FixedUpdate
-    // this is to ensure that the player moves at a consistent speed regardless of framerate
-    void moveLeft()
-    {
-        // move left relative to the current facing of the camera
-        catMove(transform.right * -1);
-    }
-    void moveBackward()
-    {
-        catMove(transform.forward * -1);
-    }
-    void moveRight()
-    {
-        catMove(transform.right);
-    }
-    void moveForward()
-    {
-        // move forward relative
-        catMove(transform.forward);
-    }
-
     bool isGrounded()
     {
         // check if the player is grounded
@@ -119,13 +96,16 @@ public class Player : MonoBehaviour
         if (isGrounded())
         {
             rb.velocity = direction * MOVESPEED_MULTIPLIER;
+        } else
+        {
+            rb.AddForce (direction * MOVESPEED_MULTIPLIER * MIDAIR_DIRECTION_INFLUENCE, ForceMode.Impulse);
         }
     }
 
     void FixedUpdate()
     {
-        forwardSpeed = 0.0f;
-        rightSpeed = 0.0f;
+        float forwardSpeed = 0.0f;
+        float rightSpeed = 0.0f;
         if (Input.GetKey(KeyCode.W))
         {
             forwardSpeed++;
