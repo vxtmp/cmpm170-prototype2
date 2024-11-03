@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -84,7 +82,8 @@ public class Player : MonoBehaviour
     // abstract each WASD movement direction into a function
     // call these functions in FixedUpdate
     // this is to ensure that the player moves at a consistent speed regardless of framerate
-    void moveLeft() {
+    void moveLeft()
+    {
         // move left relative to the current facing of the camera
         catMove(transform.right * -1);
     }
@@ -117,7 +116,8 @@ public class Player : MonoBehaviour
         {
             walking = true;
             moveForward();
-        } else
+        }
+        else
         {
             walking = false;
         }
@@ -125,7 +125,8 @@ public class Player : MonoBehaviour
         {
             walking = true;
             moveBackward();
-        } else
+        }
+        else
         {
             walking = false;
         }
@@ -133,7 +134,8 @@ public class Player : MonoBehaviour
         {
             walking = true;
             moveLeft();
-        } else
+        }
+        else
         {
             walking = false;
         }
@@ -141,18 +143,20 @@ public class Player : MonoBehaviour
         {
             walking = true;
             moveRight();
-        } else
+        }
+        else
         {
             walking = false;
         }
-// while spacebar held down
-if (Input.GetKey(KeyCode.Space) && isCharging == false)
+        // while spacebar held down
+        if (Input.GetKey(KeyCode.Space) && isCharging == false)
         {
             isCharging = true;
             startCharging();
             if (DEBUG_FLAG)
                 Debug.Log("space held down. charging");
-        } else if (!Input.GetKey(KeyCode.Space) && isCharging == true)
+        }
+        else if (!Input.GetKey(KeyCode.Space) && isCharging == true)
         {
             pounceForward();
             isCharging = false;

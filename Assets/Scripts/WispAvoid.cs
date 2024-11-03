@@ -33,7 +33,7 @@ public class WispAvoid : MonoBehaviour
     {
         if (isPlayer(other))
         {
-            parentWispScript.avoidBehavior();
+            parentWispScript.avoidBehavior(other.gameObject.transform.position);
         }
     }
 }

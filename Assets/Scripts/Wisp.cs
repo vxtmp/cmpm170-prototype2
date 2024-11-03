@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Wisp : MonoBehaviour
@@ -18,8 +16,11 @@ public class Wisp : MonoBehaviour
     [SerializeField]
     private float softCapVelocity = 10.0f;
     [SerializeField]
-    private float hardCapVelocity = 20.0f;
-    
+    private float hardCapVelocity = 100.0f;
+    private Vector3 dodgeDirection = new Vector3 (-1, 0, 0);
+
+    private bool isAvoidingNearbyCat = false;
+
 
 
     // Start is called before the first frame update
@@ -32,11 +33,55 @@ public class Wisp : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        randomMovementForce();
+        // randomMovementForce();
         applySoftAndHardVelocityCaps();
 
     }
 
+    public void startAvoidingCat()
+    {
+        isAvoidingNearbyCat = true;
+    }
+
+    public void stopAvoidingCat()
+    {
+        isAvoidingNearbyCat = false;
+    }
+
+    // Should only be called once per spawn either in Start() or in WispSpawner script when spawning new wisp
+    // out of the object pool.
+    // Determines a fixed dodge vector
+    public void reinitializeDodgeVector()
+    {
+        dodgeDirection = new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
+        //normalize the dodge direction
+        dodgeDirection.Normalize();
+    }
+
+    // Calculate relative dodge direction vector
+    public Vector3 calculateRelativeDodgeVector(Vector3 catToWisp)
+    {
+        // Normalize catToWisp to define the primary dodge direction
+        catToWisp.Normalize();
+
+        // Choose an arbitrary "up" vector to define the dodge direction
+        Vector3 up = Vector3.up;
+
+        // Calculate a perpendicular dodge direction
+        Vector3 dodgePerpendicular = Vector3.Cross(catToWisp, up);
+
+        // If dodgePerpendicular is very small (catToWisp was nearly aligned with up),
+        // use another direction (e.g., Vector3.right) to avoid zero vectors
+        if (dodgePerpendicular.sqrMagnitude < 0.001f)
+        {
+            dodgePerpendicular = Vector3.Cross(catToWisp, Vector3.right);
+        }
+
+        dodgePerpendicular.Normalize(); // Ensure consistent magnitude
+        Debug.Log("Consistent Dodge Perpendicular Vector: " + dodgePerpendicular);
+
+        return dodgePerpendicular;
+    }
     public void makeVisible()
     {
         //isVisible = true;
@@ -51,13 +96,24 @@ public class Wisp : MonoBehaviour
 
     public void avoidBehavior() // call on nearby cat (collision with larger child trigger volume
     {
-        // apply a high force vector in direction away from cat, with a slight random angle direction
-        //rb.AddForce((transform.position - cat.transform.position).normalized * speed * 10.0f);
+        
         rb.AddForce((transform.position - GameObject.Find("Player").transform.position).normalized * speed * 10.0f);
 
     }
+    public void avoidBehavior(Vector3 catPosition)
+    {
+        // set a dodge direction such that we're moving in the dodgeDirection vector direction relative to the angle
+        // between the cat and the wisp
+        // get the vector from cat to wisp
+        Vector3 catToWisp = transform.position - catPosition;
+        // calculate the relative dodge vector
+        Vector3 relativeDodgeVector = calculateRelativeDodgeVector(catToWisp);
+        // apply dodge vector
+        rb.AddForce(relativeDodgeVector * speed * 100.0f);
+    }
     public void caught() // call on cat collision to main object.
     {
+        return; // TEMP
         if (DEBUG_FLAG) Debug.Log("caught!");
         wispPoolScript.ReturnWisp(this.gameObject);
     }

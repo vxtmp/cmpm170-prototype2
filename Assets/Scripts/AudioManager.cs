@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -28,14 +26,14 @@ public class AudioManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(PlayMan.isCharging)
+        if (PlayMan.isCharging)
         {
             aud.clip = jump;
             aud.loop = false;
             instate = true;
             aud.Play();
         }
-        
+
         if (PlayMan.walking && !toggleplay && instate)
         {
             aud.clip = walk;
@@ -44,7 +42,8 @@ public class AudioManager : MonoBehaviour
             walking = true;
             aud.Play();
             toggleplay = true;
-        } else if (!PlayMan.walking && walking)
+        }
+        else if (!PlayMan.walking && walking)
         {
             aud.Stop();
             toggleplay = false;

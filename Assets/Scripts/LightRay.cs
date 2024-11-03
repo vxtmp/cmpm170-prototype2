@@ -1,8 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
-using UnityEngine.Rendering.PostProcessing;
 
 public class LightRay : MonoBehaviour
 {
@@ -20,7 +16,7 @@ public class LightRay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     bool isWisp(Collider other)
@@ -50,7 +46,8 @@ public class LightRay : MonoBehaviour
             {
                 if (DEBUG_FLAG) Debug.Log("wisp entered light. making visible");
                 wisp.makeVisible();
-            } else
+            }
+            else
             {
                 if (DEBUG_FLAG) Debug.Log("wisp == null");
             }
