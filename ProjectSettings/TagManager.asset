@@ -7,6 +7,7 @@ TagManager:
   - Wisp
   - Wall
   - WispSpawner
+  - InvisWisp
   layers:
   - Default
   - TransparentFX
@@ -15,8 +16,8 @@ TagManager:
   - Water
   - UI
   - vlight
-  - 
-  - 
+  - InvisWisp
+  - Player
   - 
   - 
   - 
