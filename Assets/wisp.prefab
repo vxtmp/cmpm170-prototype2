@@ -242,7 +242,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DEBUG_FLAG: 1
-  bunny: {fileID: -5495902117074765545, guid: ad11877fad8332a43b7485aa2c8cc265, type: 3}
+  bunny: {fileID: 449884079793949530, guid: cd7df07c5b2404444978c41c062ce83e, type: 3}
 --- !u!135 &8183800865432755981
 SphereCollider:
   m_ObjectHideFlags: 0
