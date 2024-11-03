@@ -41,7 +41,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         // if velocity < a certain value then disable the pawsCanvasObject
-        if (rb.velocity.magnitude < 1.0f)
+        float pawThreshold = transform.forward.magnitude * MOVESPEED_MULTIPLIER;
+        if (rb.velocity.magnitude <= pawThreshold)
         {
             pawsCanvasObject.SetActive(false);
         }
