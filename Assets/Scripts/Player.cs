@@ -69,7 +69,7 @@ public class Player : MonoBehaviour
     void pounceForward()
     {
         // move forward by POUNCE_BASE_DISTANCE * currentCharge
-        if (currentCharge > 0)
+        if (currentCharge > 0 && isGrounded())
         {
             //transform.position += transform.forward * POUNCE_BASE_DISTANCE * currentCharge;
             // apply forces to rb
