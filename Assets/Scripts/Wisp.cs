@@ -123,7 +123,6 @@ public class Wisp : MonoBehaviour
     }
     public void caught() // call on cat collision to main object.
     {
-        return; // TEMP
         if (DEBUG_FLAG) Debug.Log("caught!");
         wispPoolScript.ReturnWisp(this.gameObject);
     }

@@ -9,6 +9,10 @@ public class PlayerWallJump : MonoBehaviour
     private GameObject playerObj;
     private Player playerScript;
 
+    // maintain a list of gameobjects that are near the player (through on enter triggers and exit triggers)
+    private List<GameObject> nearbyObjects = new List<GameObject>();
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,5 +23,15 @@ public class PlayerWallJump : MonoBehaviour
     void Update()
     {
         
+    }
+
+    // on trigger enter
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Wall")
+        {
+            // add the wall to the list of nearby objects
+            nearbyObjects.Add(other.gameObject);
+        }
     }
 }
