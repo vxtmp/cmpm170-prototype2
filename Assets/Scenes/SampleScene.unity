@@ -1554,6 +1554,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bee30ead40f8daa489a5a709b45ac440, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCharging: 0
+  walking: 0
   pawsCanvasObject: {fileID: 220273839}
   playerBody: {fileID: 1302799592}
 --- !u!135 &1302799589
@@ -1778,12 +1780,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8659320dd15e8a4c8566d0a0280a038, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerAud: {fileID: 0}
-  PlayMan: {fileID: 0}
-  jump: {fileID: 0}
-  wispSparkle: {fileID: 0}
-  wispCaught: {fileID: 0}
-  walk: {fileID: 0}
+  aud: {fileID: 0}
+  PlayMan: {fileID: 1302799588}
+  jump: {fileID: 8300000, guid: 8c1c49322a101b84ca41860104468d53, type: 3}
+  wispCaught: {fileID: 8300000, guid: 0dc479fb038f4ed43be10e4ffb1dd544, type: 3}
+  walk: {fileID: 8300000, guid: fd83ead3eedf24949bf34db743887518, type: 3}
 --- !u!1 &1345870593
 GameObject:
   m_ObjectHideFlags: 0
