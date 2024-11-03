@@ -8,7 +8,8 @@ public class Player : MonoBehaviour
     [SerializeField]
     private const bool DEBUG_FLAG = false;
 
-    private bool isCharging = false;
+    public bool isCharging = false;
+    public bool walking = false;
     private float currentCharge = 0.0f;
     private float chargeSpeed = 1.0f;
     [SerializeField]
@@ -108,22 +109,38 @@ public class Player : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
+            walking = true;
             moveForward();
+        } else
+        {
+            walking = false;
         }
         if (Input.GetKey(KeyCode.S))
         {
+            walking = true;
             moveBackward();
+        } else
+        {
+            walking = false;
         }
         if (Input.GetKey(KeyCode.A))
         {
+            walking = true;
             moveLeft();
+        } else
+        {
+            walking = false;
         }
         if (Input.GetKey(KeyCode.D))
         {
+            walking = true;
             moveRight();
+        } else
+        {
+            walking = false;
         }
-        // while spacebar held down
-        if (Input.GetKey(KeyCode.Space) && isCharging == false)
+// while spacebar held down
+if (Input.GetKey(KeyCode.Space) && isCharging == false)
         {
             isCharging = true;
             startCharging();

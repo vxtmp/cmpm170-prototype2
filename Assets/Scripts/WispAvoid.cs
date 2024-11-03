@@ -5,14 +5,12 @@ using UnityEngine;
 
 public class WispAvoid : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject parentWisp; // set to parent object that's holding this object that's only holding a trigger volume.
-    private Wisp parentWispScript;
+    //[SerializeField] private GameObject parentWisp; // set to parent object that's holding this object that's only holding a trigger volume.
+    [SerializeField] private Wisp parentWispScript;
     
     // Start is called before the first frame update
     void Start()
     {
-        parentWispScript = parentWisp.GetComponent<Wisp>();
     }
 
     // Update is called once per frame

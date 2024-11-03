@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c696af022b1b2a24ba3d65ffa0b0d4dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentWisp: {fileID: 7376715856485983957}
+  parentWispScript: {fileID: 2453907482113481140}
 --- !u!1 &3426058578236508143
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +133,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 66cf1b6cb5e997944bdd25ca037f05cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentWisp: {fileID: 7376715856485983957}
+  parentWispScript: {fileID: 2453907482113481140}
+  aud: {fileID: 0}
+  caught: {fileID: 8300000, guid: 0dc479fb038f4ed43be10e4ffb1dd544, type: 3}
 --- !u!1 &7376715856485983957
 GameObject:
   m_ObjectHideFlags: 0
@@ -145,6 +147,7 @@ GameObject:
   - component: {fileID: 5635532262062993479}
   - component: {fileID: 1278943766800246922}
   - component: {fileID: 2216228393216149978}
+  - component: {fileID: 2453907482113481140}
   - component: {fileID: 8183800865432755981}
   - component: {fileID: 5524621773178227797}
   - component: {fileID: 2150077021816783442}
@@ -223,6 +226,22 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &2453907482113481140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7376715856485983957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f577d79dc6e59b24585da7adabde7816, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wispPool: {fileID: 0}
+  DEBUG_FLAG: 1
+  softCapVelocity: 10
+  hardCapVelocity: 20
 --- !u!135 &8183800865432755981
 SphereCollider:
   m_ObjectHideFlags: 0

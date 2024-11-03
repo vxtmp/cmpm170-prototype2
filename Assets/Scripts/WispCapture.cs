@@ -4,14 +4,14 @@ using UnityEngine;
 
 public class WispCapture : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject parentWisp; // set to parent object that's holding this object that's only holding a trigger volume.
-    private Wisp parentWispScript;
+    [SerializeField] private Wisp parentWispScript;
+    [SerializeField] private AudioSource aud;
+    [SerializeField] private AudioClip caught;
 
     // Start is called before the first frame update
     void Start()
     {
-        parentWispScript = parentWisp.GetComponent<Wisp>();
+        aud = GameObject.FindGameObjectWithTag("Player").GetComponent<AudioSource>();
 
     }
 
@@ -34,6 +34,7 @@ public class WispCapture : MonoBehaviour
     {
         if (isPlayer(other))
         {
+            aud.clip = caught;
             parentWispScript.caught();
         }
     }
