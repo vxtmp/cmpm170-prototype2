@@ -938,7 +938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wispPrefab: {fileID: 7376715856485983957, guid: f6c15aef175fff946b27ecc3565d9ccc, type: 3}
-  initialPoolSize: 30
+  initialPoolSize: 20
 --- !u!4 &834002862
 Transform:
   m_ObjectHideFlags: 0
@@ -2455,7 +2455,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.5
+      scalar: 0.8
       minScalar: 1
       maxCurve:
         serializedVersion: 2
