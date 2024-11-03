@@ -110,8 +110,6 @@ public class Wisp : MonoBehaviour
         setColorToRed();
         Debug.Log("red");
         returnWispAfterDelay(2.0f);
-        Debug.Log("bunny time");
-        spawnBunny();
     }
 
     public void setColorToRed()
@@ -134,6 +132,8 @@ public class Wisp : MonoBehaviour
         yield return new WaitForSeconds(delay);
         resetColor();
         diePos = this.transform.position;
+        spawnBunny();
+        Debug.Log("bunny time");
         wispPoolScript.ReturnWisp(this.gameObject);
     }
 
