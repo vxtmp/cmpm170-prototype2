@@ -9,13 +9,12 @@ public class LightRay : MonoBehaviour
 
     [SerializeField]
     private bool DEBUG_FLAG = true;
-    [SerializeField] private PostProcessVolume volume;
+    [SerializeField] private GameObject bloomToggle;
 
     // Start is called before the first frame update
     void Start()
     {
-        volume = GetComponent<PostProcessVolume>();
-        //volume.profile.TryGetSettings(out bloom);
+
     }
 
     // Update is called once per frame
@@ -60,7 +59,7 @@ public class LightRay : MonoBehaviour
         if (isPlayer(other))
         {
             // enable light post processing effect here.
-            volume.enabled = true;
+            bloomToggle.SetActive(true);
         }
     }
     private void OnTriggerExit(Collider other)
@@ -82,7 +81,7 @@ public class LightRay : MonoBehaviour
         if (isPlayer(other))
         {
             // disable light post processing effecth ere
-            volume.enabled = false;
+            bloomToggle.SetActive(false);
         }
     }
 }

@@ -134,12 +134,12 @@ GameObject:
   - component: {fileID: 21559489}
   - component: {fileID: 21559488}
   m_Layer: 6
-  m_Name: post process volume test (hue, saturation, contrast adjustment)
+  m_Name: 'toggle bloom '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &21559488
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sharedProfile: {fileID: 11400000, guid: ab9069e389ed4914a85a0e0ae67a5a07, type: 2}
+  sharedProfile: {fileID: 11400000, guid: f3bda5e241b1f21479d834b6224a17a9, type: 2}
   isGlobal: 1
   blendDistance: 0
   weight: 1
@@ -6863,6 +6863,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: -216.315, y: 0, z: 0}
+--- !u!1 &1566103361 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5425112903382551177, guid: 4d0dead1f1020614c87184be77afa502, type: 3}
+  m_PrefabInstance: {fileID: 1847117584108681226}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1566103367
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1566103361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b9a305e18de0c04dbd257a21cd47087, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sharedProfile: {fileID: 11400000, guid: 710e9a88f7150874f9c233b99c959acf, type: 2}
+  isGlobal: 1
+  blendDistance: 0
+  weight: 1
+  priority: 0
 --- !u!1 &1611248787
 GameObject:
   m_ObjectHideFlags: 0
@@ -7404,9 +7426,17 @@ PrefabInstance:
       propertyPath: volume
       value: 
       objectReference: {fileID: 21559488}
+    - target: {fileID: 1008213268208522448, guid: 4d0dead1f1020614c87184be77afa502, type: 3}
+      propertyPath: bloomToggle
+      value: 
+      objectReference: {fileID: 21559487}
     - target: {fileID: 5425112903382551177, guid: 4d0dead1f1020614c87184be77afa502, type: 3}
       propertyPath: m_Name
       value: Cylinder
+      objectReference: {fileID: 0}
+    - target: {fileID: 5425112903382551177, guid: 4d0dead1f1020614c87184be77afa502, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5445344426552146487, guid: 4d0dead1f1020614c87184be77afa502, type: 3}
       propertyPath: m_RootOrder
@@ -7471,7 +7501,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5425112903382551177, guid: 4d0dead1f1020614c87184be77afa502, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1566103367}
   m_SourcePrefab: {fileID: 100100000, guid: 4d0dead1f1020614c87184be77afa502, type: 3}
 --- !u!1001 &6900490254791472771
 PrefabInstance:
@@ -7561,7 +7594,7 @@ PrefabInstance:
       propertyPath: rolloffCustomCurve.m_Curve.Array.data[3].outWeight
       value: 0.6725336
       objectReference: {fileID: 0}
-    - target: {fileID: 2105759366811258276, guid: f6c15aef175fff946b27ecc3565d9ccc, type: 3}
+    - target: {fileID: 2453907482113481140, guid: f6c15aef175fff946b27ecc3565d9ccc, type: 3}
       propertyPath: wispPool
       value: 
       objectReference: {fileID: 834002860}
