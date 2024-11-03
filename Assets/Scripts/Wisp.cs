@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Wisp : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject wispPool;
+    private GameObject wispSpawner;
+    private GameObject playerObj;
 
     private WispSpawner wispPoolScript;
 
@@ -14,8 +14,6 @@ public class Wisp : MonoBehaviour
     private float speed = 0.3f;
 
     private Rigidbody rb;
-    [SerializeField]
-    private GameObject playerObj;
 
     private const float SOFTCAP_VELOCITY = 2.0f;
     private const float HARDCAP_VELOCITY = 20.0f;
@@ -37,8 +35,11 @@ public class Wisp : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerObj = GameObject.FindGameObjectWithTag("Player")!;
+        wispSpawner = GameObject.FindGameObjectWithTag("WispSpawner")!;
+        wispPoolScript = wispSpawner.GetComponent<WispSpawner>()!;
+
         this.rb = GetComponent<Rigidbody>();
-        wispPoolScript = wispPool.GetComponent<WispSpawner>();
         vector_duration = Random.Range(0.5f, MAX_VECTOR_DURATION);
         currentVector = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
         currentVector.Normalize();

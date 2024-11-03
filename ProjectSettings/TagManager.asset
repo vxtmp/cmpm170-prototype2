@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wisp
   - Wall
+  - WispSpawner
   layers:
   - Default
   - TransparentFX
