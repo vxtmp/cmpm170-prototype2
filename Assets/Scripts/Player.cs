@@ -10,15 +10,10 @@ public class Player : MonoBehaviour
     public bool walking = false;
     private float currentCharge = 0.0f;
     private float chargeSpeed = 1.0f;
-    [SerializeField]
     private const float mouseSensitivity = 500f;
-    [SerializeField]
     private const float MOVESPEED_MULTIPLIER = 3.0f;
-    [SerializeField]
-    private const float POUNCE_BASE_DISTANCE = 500.0f;
-    [SerializeField]
+    private const float POUNCE_BASE_DISTANCE = 200.0f;
     private const float MAX_CHARGE = 2.0f;
-    [SerializeField]
     private float MIDAIR_DIRECTION_INFLUENCE = 0.05f;
 
     [SerializeField]

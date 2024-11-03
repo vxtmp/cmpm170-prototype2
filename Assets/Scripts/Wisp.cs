@@ -102,12 +102,18 @@ public class Wisp : MonoBehaviour
     public void caught() // call on cat collision to main object.
     {
         if (DEBUG_FLAG) Debug.Log("caught!");
+        setColorToRed();
         returnWispAfterDelay(1.0f);
     }
 
     public void setColorToRed()
     {
         this.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+    }
+
+    public void resetColor()
+    {
+        this.gameObject.GetComponent<MeshRenderer>().material.color = Color.white;
     }
 
     // create a coroutine to return the wisp after a delay
@@ -118,6 +124,7 @@ public class Wisp : MonoBehaviour
     public IEnumerator returnWispAfterDelayCoroutine(float delay)
     {
         yield return new WaitForSeconds(delay);
+        resetColor();
         wispPoolScript.ReturnWisp(this.gameObject);
     }
 
