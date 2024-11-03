@@ -3,8 +3,7 @@ using UnityEngine;
 public class LightRay : MonoBehaviour
 {
 
-    [SerializeField]
-    private bool DEBUG_FLAG = true;
+    private bool DEBUG_FLAG = false;
     [SerializeField] private GameObject bloomToggle;
 
     // Start is called before the first frame update
