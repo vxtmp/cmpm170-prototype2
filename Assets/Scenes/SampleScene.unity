@@ -938,7 +938,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   wispPrefab: {fileID: 7376715856485983957, guid: f6c15aef175fff946b27ecc3565d9ccc, type: 3}
-  initialPoolSize: 20
+  initialPoolSize: 30
 --- !u!4 &834002862
 Transform:
   m_ObjectHideFlags: 0
@@ -1631,7 +1631,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isCharging: 0
   walking: 0
-  MIDAIR_DIRECTION_INFLUENCE: 0.1
   pawsCanvasObject: {fileID: 220273839}
   playerBody: {fileID: 1302799592}
 --- !u!135 &1302799589
@@ -2456,7 +2455,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 0.5
       minScalar: 1
       maxCurve:
         serializedVersion: 2
