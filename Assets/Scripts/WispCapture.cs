@@ -34,6 +34,7 @@ public class WispCapture : MonoBehaviour
     {
         if (isPlayer(other))
         {
+            Debug.Log("CAUGHT");
             aud.clip = caught;
             parentWispScript.caught();
         }

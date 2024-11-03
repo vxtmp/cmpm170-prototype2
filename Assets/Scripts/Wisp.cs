@@ -108,7 +108,9 @@ public class Wisp : MonoBehaviour
     {
         if (DEBUG_FLAG) Debug.Log("caught!");
         setColorToRed();
+        Debug.Log("red");
         returnWispAfterDelay(2.0f);
+        Debug.Log("bunny time");
         spawnBunny();
     }
 
@@ -175,6 +177,7 @@ public class Wisp : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.name == "Player")
         {
+            Debug.Log("caught");
             caught();
         }
     }
