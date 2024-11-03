@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Wisp
+  - Wall
   layers:
   - Default
   - TransparentFX

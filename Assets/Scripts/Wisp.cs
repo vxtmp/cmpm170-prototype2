@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Wisp : MonoBehaviour
@@ -10,20 +11,26 @@ public class Wisp : MonoBehaviour
     [SerializeField]
     private bool DEBUG_FLAG = true;
     //private bool isVisible = false;
-    private float speed = 1.0f;
+    private float speed = 0.3f;
 
     private Rigidbody rb;
     [SerializeField]
     private GameObject playerObj;
-    [SerializeField]
-    private float SOFTCAP_VELOCITY = 10.0f;
-    [SerializeField]
-    private float HARDCAP_VELOCITY = 100.0f;
-    [SerializeField]
-    private float AVOID_FORCE = 10.0f;
-    private Vector3 dodgeDirection = new Vector3 (-1, 0, 0);
 
-    private bool isAvoidingNearbyCat = false;
+    private const float SOFTCAP_VELOCITY = 2.0f;
+    private const float HARDCAP_VELOCITY = 20.0f;
+
+    private const float AVOIDANCE_FORCE_CAP = 5.0f;
+    private const float AVOIDANCE_FORCE_SCALAR = 1.0f;
+
+    private const float COHESION_FORCE_SCALAR = 0.0f;
+
+    private const float ALIGNMENT_FORCE_SCALAR = 1.0f;
+
+    private float time_elapsed_since_last_vector = 0.0f;
+    private float vector_duration = 0.0f;
+    private float MAX_VECTOR_DURATION = 3.0f;
+    private Vector3 currentVector;
 
 
 
@@ -32,65 +39,53 @@ public class Wisp : MonoBehaviour
     {
         this.rb = GetComponent<Rigidbody>();
         wispPoolScript = wispPool.GetComponent<WispSpawner>();
+        vector_duration = Random.Range(0.5f, MAX_VECTOR_DURATION);
+        currentVector = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+        currentVector.Normalize();
+
+        //reinitializeDodgeVector();
+    }
+
+    float getCappedForceBasedOnDistance (Vector3 nearbyObjPosition)
+    {
+        Vector3 distance = nearbyObjPosition - this.transform.position;
+        float distanceMagnitude = distance.magnitude;
+        float force = AVOIDANCE_FORCE_SCALAR / distanceMagnitude;
+        if (force > AVOIDANCE_FORCE_CAP)
+        {
+            force = AVOIDANCE_FORCE_CAP;
+        }
+        return force;
+    }
+
+    public void applyForceAwayFromNearbyObj(Vector3 nearbyObjPosition)
+    {
+        // get the direction vector from this object to the nearby object
+        Vector3 direction = nearbyObjPosition - this.transform.position;
+        // apply a force in the opposite direction
+        rb.AddForce(-direction.normalized * getCappedForceBasedOnDistance(nearbyObjPosition));
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isAvoidingNearbyCat)
-        {
-            avoidBehavior(playerObj.transform.position);
-        } else
-        {
-            randomMovementForce();
-        }
+        updateVector(); // update the random direction vector every random duration 0.5s to 3.0s to feel more random.
+
+        randomMovementForce();
         applySoftAndHardVelocityCaps(); // truncates to hard. lerps to soft.
 
     }
 
-    public void startAvoidingCat()
+    void updateVector()
     {
-        isAvoidingNearbyCat = true;
-    }
-
-    public void stopAvoidingCat()
-    {
-        isAvoidingNearbyCat = false;
-    }
-
-    // Should only be called once per spawn either in Start() or in WispSpawner script when spawning new wisp
-    // out of the object pool.
-    // Determines a fixed dodge vector
-    public void reinitializeDodgeVector()
-    {
-        dodgeDirection = new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f));
-        //normalize the dodge direction
-        dodgeDirection.Normalize();
-    }
-
-    // Calculate relative dodge direction vector
-    public Vector3 calculateRelativeDodgeVector(Vector3 catToWisp)
-    {
-        // Normalize catToWisp to define the primary dodge direction
-        catToWisp.Normalize();
-
-        // Choose an arbitrary "up" vector to define the dodge direction
-        Vector3 up = Vector3.up;
-
-        // Calculate a perpendicular dodge direction
-        Vector3 dodgePerpendicular = Vector3.Cross(catToWisp, up);
-
-        // If dodgePerpendicular is very small (catToWisp was nearly aligned with up),
-        // use another direction (e.g., Vector3.right) to avoid zero vectors
-        if (dodgePerpendicular.sqrMagnitude < 0.001f)
+        time_elapsed_since_last_vector += Time.deltaTime;
+        if (time_elapsed_since_last_vector > vector_duration)
         {
-            dodgePerpendicular = Vector3.Cross(catToWisp, Vector3.right);
+            time_elapsed_since_last_vector = 0.0f;
+            vector_duration = Random.Range(0.5f, MAX_VECTOR_DURATION);
+            currentVector = new Vector3(Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f), Random.Range(-1.0f, 1.0f));
+            currentVector.Normalize();
         }
-
-        dodgePerpendicular.Normalize(); // Ensure consistent magnitude
-        if (DEBUG_FLAG) Debug.Log("Consistent Dodge Perpendicular Vector: " + dodgePerpendicular);
-
-        return dodgePerpendicular;
     }
     public void makeVisible()
     {
@@ -103,27 +98,25 @@ public class Wisp : MonoBehaviour
     {
         this.gameObject.GetComponent<MeshRenderer>().enabled = false;
     }
-
-    public float calculateAvoidForce (float distance)
-    {
-        if (DEBUG_FLAG) Debug.Log("distance is " + distance + " force is " + AVOID_FORCE / distance);
-        return AVOID_FORCE / distance;
-    }
-    public void avoidBehavior(Vector3 catPosition)
-    {
-        // set a dodge direction such that we're moving in the dodgeDirection vector direction relative to the angle
-        // between the cat and the wisp
-        // get the vector from cat to wisp
-        Vector3 catToWisp = transform.position - catPosition;
-        float avoidForce = calculateAvoidForce(catToWisp.magnitude);
-        // calculate the relative dodge vector
-        Vector3 relativeDodgeVector = calculateRelativeDodgeVector(catToWisp);
-        // apply dodge vector
-        rb.AddForce(relativeDodgeVector * speed * avoidForce);
-    }
     public void caught() // call on cat collision to main object.
     {
         if (DEBUG_FLAG) Debug.Log("caught!");
+        returnWispAfterDelay(1.0f);
+    }
+
+    public void setColorToRed()
+    {
+        this.gameObject.GetComponent<MeshRenderer>().material.color = Color.red;
+    }
+
+    // create a coroutine to return the wisp after a delay
+    public void returnWispAfterDelay(float delay)
+    {
+        StartCoroutine(returnWispAfterDelayCoroutine(delay));
+    }
+    public IEnumerator returnWispAfterDelayCoroutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
         wispPoolScript.ReturnWisp(this.gameObject);
     }
 
@@ -135,7 +128,9 @@ public class Wisp : MonoBehaviour
             return;
         }
         // else apply a random small random direction force
-        rb.AddForce(new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f)) * speed);
+        //rb.AddForce(new Vector3(Random.Range(-1.0f, 1.0f), 0.0f, Random.Range(-1.0f, 1.0f)) * speed);
+        // apply force in direction of currentVector
+        rb.AddForce(currentVector * speed);
     }
 
     void applySoftAndHardVelocityCaps()

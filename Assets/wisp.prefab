@@ -67,6 +67,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentWispScript: {fileID: 2453907482113481140}
+  nearbyObjects: []
+  playerAvoidForce: 10
+  wallAvoidForce: 10
 --- !u!1 &3426058578236508143
 GameObject:
   m_ObjectHideFlags: 0
@@ -241,9 +244,6 @@ MonoBehaviour:
   wispPool: {fileID: 0}
   DEBUG_FLAG: 1
   playerObj: {fileID: 0}
-  SOFTCAP_VELOCITY: 10
-  HARDCAP_VELOCITY: 100
-  AVOID_FORCE: 100
 --- !u!135 &8183800865432755981
 SphereCollider:
   m_ObjectHideFlags: 0
